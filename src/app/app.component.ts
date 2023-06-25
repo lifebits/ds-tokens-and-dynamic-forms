@@ -1,4 +1,16 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { TokenManager } from './token-manager';
+import { map, Observable } from "rxjs";
+
+function getRandomVal(min: number, max: number): number {
+  return Math.round(min + Math.random() * (max - min));
+}
+
+function generateHEXColor(): string {
+  return '#' + Math.random().toString(16).substr(-6);
+}
 
 @Component({
   selector: 'app-root',
@@ -6,5 +18,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'blankAngular14';
+  constructor(private http: HttpClient) {
+    // this.updateThemeTokens();
+  }
 }

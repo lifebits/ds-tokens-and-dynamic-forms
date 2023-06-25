@@ -1,0 +1,61 @@
+@use "sass:meta";
+@use "./isp-colors-tokens" as ispColorTokens;
+
+@use "./isp-theme-color-light" as ispLightTheme;
+@use "./isp-theme-color-dark" as ispDarkTheme;
+
+@use "./isp-theme-typography" as ispTypography;
+@use "./isp-theme-spacers" as ispSpacers;
+
+@function getThemeColorPalette($theme-color-scheme: 'light') {
+  @if $theme-color-scheme == light {
+    @return ispLightTheme.$tokens;
+  }
+  @if $theme-color-scheme == dark {
+    @return ispDarkTheme.$tokens;
+  }
+}
+
+@function getISPTheme($color-scheme: 'light') {
+  @return (
+    typography: ispTypography.$tokens,
+    spacers: ispSpacers.$tokens,
+    colors: getThemeColorPalette($color-scheme),
+  );
+}
+
+/**
+ * Mixin for generate css variable like as --#{prefix}-#{categoryName}-#{"" + propertyName}: #{propertyValue};
+ * @param {string} $color-scheme - Available value: light or dark.
+ * @param {string} $prefix - Prefix for generate tokens.
+ */
+@mixin ispThemeTokens($color-scheme: 'light', $prefix: 'isp') {
+  $theme: getISPTheme($color-scheme);
+  @each $themePart, $partData in $theme {
+    @if $themePart == 'colors' {
+      @each $categoryName, $propertyList in $partData {
+        @if ($categoryName == 'background') or ($categoryName == 'text') or ($categoryName == 'icon') {
+          @each $propertyName, $propertyValue in $propertyList {
+            @if meta.type-of($propertyValue) == color {
+              @include ispColorTokens.generateColorBasis($prefix, $categoryName, $propertyName, $propertyValue);
+              @include ispColorTokens.generateColorLightness($prefix, $categoryName, $propertyName, $propertyValue);
+              @include ispColorTokens.generateColorBaseToken($prefix, $categoryName, $propertyName);
+              @include ispColorTokens.generateColorHoverToken($prefix, $categoryName, $propertyName);
+              @include ispColorTokens.generateColorActiveToken($prefix, $categoryName, $propertyName);
+            }
+          }
+        } @else {
+          @each $propertyName, $propertyValue in $propertyList {
+            @include ispColorTokens.generateColorToken($prefix, $categoryName, $propertyName, $propertyValue);
+          }
+        }
+      }
+    } @else {
+      @each $categoryName, $propertyList in $partData {
+        @each $propertyName, $propertyValue in $propertyList {
+          @include ispColorTokens.generateDefaultToken($prefix, $categoryName, $propertyName, $propertyValue);
+        }
+      }
+    }
+  }
+}

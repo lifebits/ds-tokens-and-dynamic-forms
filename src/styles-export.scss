@@ -1,0 +1,25 @@
+//@use "assets/isp-theme" as ispTheme;
+//@use "assets/isp-colors-tools" as colorsTools;
+//@use "assets/isp-color-mixin" as colorMixin;
+//
+//$ispTheme: ispTheme.getISPTheme('light');
+//$ispThemeColors: colorsTools.getThemeColors($ispTheme);
+//
+//$background: colorsTools.getColorComponent($ispThemeColors, background);
+//$text: colorsTools.getColorComponent($ispThemeColors, text);
+//$icon: colorsTools.getColorComponent($ispThemeColors, icon);
+//$border: colorsTools.getColorComponent($ispThemeColors, border);
+//$neutral: colorsTools.getColorComponent($ispThemeColors, neutral);
+//$graph: colorsTools.getColorComponent($ispThemeColors, graph);
+//$shadow: colorsTools.getColorComponent($ispThemeColors, shadow);
+//$table: colorsTools.getColorComponent($ispThemeColors, table);
+
+//:root {
+//  --isp-background-main: 2222;
+//  @include colorMixin.generateStateVariables('background-success', ispTheme.getColorProperty($background, 'success'));
+//  @include colorMixin.generateStateVariables('background-danger', ispTheme.getColorProperty($background, 'danger'));
+//
+//  --background-success: hsl(137, 65%, 30%);
+//  --background-danger: hsl(342, 96%, 44%);
+//  --background-danger-hsl: darken(hsl(342, 96%, 44%), 16%);
+//}

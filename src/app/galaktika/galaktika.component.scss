@@ -1,0 +1,20 @@
+table {
+  width: 600px;
+  min-height: 200px;
+
+  thead {
+    background-color: #fc0;
+    text-align: center;
+    font-size: 0.94rem;
+  }
+
+  tbody {
+    background-color: #ccc;
+    text-align: center;
+  }
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}

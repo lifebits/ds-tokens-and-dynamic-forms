@@ -1,0 +1,8 @@
+{
+  "colors": {
+    "background": {
+      "success": "hsl(114, 78%, 60%)",
+      "warning": "hsl(29, 94%, 56%)"
+    }
+  }
+}

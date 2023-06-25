@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@use "assets/isp-theme" as ispTheme;
+
+:root {
+  @include ispTheme.ispThemeTokens('light')
+}
+
+//@media (prefers-color-scheme: dark) {
+//  :root {
+//    @include ispTheme.ispThemeTokens('dark')
+//  }
+//}

@@ -1,0 +1,78 @@
+.color-title {
+  z-index: 1;
+  position: absolute;
+  top: 20px;
+}
+
+.wrapper-colors {
+  position: relative;
+  width: 100%;
+  height: 300px;
+
+  .base {
+    position: relative;
+    height: 200px;
+    padding: 50px 20px 20px;
+    .hover {
+      height: 50%;
+    }
+    .active {
+      height: 50%;
+    }
+  }
+
+  .success {
+    background-color: var(--isp-background-success);
+    .hover {
+      background-color: var(--isp-background-success__hover);
+    }
+    .active {
+      background-color: var(--isp-background-success__active);
+    }
+  }
+
+  .warning {
+    background-color: var(--isp-background-warning);
+    .hover {
+      background-color: var(--isp-background-warning__hover);
+    }
+    .active {
+      background-color: var(--isp-background-warning__active);
+    }
+  }
+}
+
+
+
+
+@mixin label-01() {
+  font-size: var(--isp-size-0875);
+  line-height: var(--isp-size-1-125);
+  font-weight: 400;
+  color: var(--isp-background-warning);
+}
+
+H1.first {
+  padding: 10px;
+  //color: var(--isp-background-success-hover);
+  color: var(--isp-table-background-even-selected);
+  //background-color: color-mix(in srgb, #34c9eb 70%, white);
+  &:hover {
+    cursor: pointer;
+    color: var(--isp-background-danger-hover);
+  }
+}
+
+H1.second {
+  padding: 10px;
+  color: var(--isp-background-test);
+  //color: darken(hsl(342, 96%, 44%), 16%);
+  //color: var(--background-success);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--isp-background-test__hover);
+    //color: hsl(var(--background-success), 16%);
+    //color: var(--background-success-hsl);
+  }
+}

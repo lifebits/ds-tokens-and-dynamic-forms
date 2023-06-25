@@ -1,0 +1,35 @@
+@use "sass:map";
+@use "sass:color";
+
+@function getHSLColor($color) {
+  $h: color.hue($color);
+  $s: color.saturation($color);
+  $l: color.lightness($color);
+  @return hsl($h, $s, $l);
+}
+
+@function getHSColor($color) {
+  $h: color.hue($color);
+  $s: color.saturation($color);
+  @return $h, $s;
+}
+
+@function getColorLightness($color) {
+  @return color.lightness($color);
+}
+
+/***
+  Manual get Colors
+***/
+
+@function getThemeColors($theme) {
+  @return map.get($theme, 'colors');
+}
+
+@function getColorComponent($colorPalette, $themeComponentName) {
+  @return map.get($colorPalette, $themeComponentName);
+}
+
+@function getColorProperty($component, $propertyName) {
+  @return map-get($component, $propertyName);
+}

@@ -1,0 +1,229 @@
+@use "variables/background" as bg;
+@use "variables/text" as text;
+@use "variables/icon" as icon;
+@use "variables/border" as border;
+@use "variables/neutral" as neutral;
+@use "variables/graph" as graph;
+@use "variables/shadow" as shadow;
+@use "variables/table" as table;
+//@use "variables/color-gen" as colorGen;
+@use "sass:map";
+
+@use "isp-color-gen" as colorGen;
+
+/*!
+@category Фон
+--isp-background-main Основной фон
+--isp-background-additional Светлый фон
+--isp-background-contrast Тёмный фон
+--isp-background-list Фон при наведении в списке
+--isp-background-accent Фон акцент
+--isp-background-accent-hover Фон акцентной кнопки при наведении
+--isp-background-accent-active Фон акцентной кнопки при нажатии
+--isp-background-info Фон primary кнопок и тогглов
+--isp-background-info-secondary Фон инфо в баннерах
+--isp-background-info-hover Фон primary кнопок при наведении
+--isp-background-info-active Фон primary кнопок при нажатии
+--isp-background-info-inline-hover Фон primary инлайн-кнопок при наведении
+--isp-background-info-inline-active Фон primary инлайн-кнопок при нажатии
+--isp-background-success Фон зеленой кнопок и тогглов
+--isp-background-success-hover Фон зеленой кнопки при наведении
+--isp-background-success-active Фон зеленой кнопки при нажатии
+--isp-background-success-inline-hover Фон success инлайн-кнопок при наведении
+--isp-background-success-inline-active Фон success инлайн-кнопок при нажатии
+--isp-background-success-secondary Фон успеха в баннерах
+--isp-background-warning Фон предупреждения
+--isp-background-warning-hover
+--isp-background-warning-active
+--isp-background-warning-inline-hover Фон warning инлайн-кнопок при наведении
+--isp-background-warning-inline-active Фон warning инлайн-кнопок при нажатии
+--isp-background-warning-secondary Фон предупреждения в баннерах
+--isp-background-danger Фон ошибки
+--isp-background-danger-hover Фон danger инлайн-кнопок при наведении
+--isp-background-danger-active Фон danger инлайн-кнопок при нажатии
+--isp-background-danger-inline-hover
+--isp-background-danger-inline-active
+--isp-background-danger-secondary Фон ошибки в баннерах
+
+@category Текст
+--isp-text-main Основной цвет текста
+--isp-text-contrast Контрастный цвет текста
+--isp-text-additional Дополнительный текст, подписи
+--isp-text-accent Ссылка на тёмном фоне
+--isp-text-accent-hover Ссылка на тёмном фоне при наведении
+--isp-text-accent-active Ссылка на тёмном фоне при нажатии
+--isp-text-interactive Ссылка, статус
+--isp-text-interactive-hover Ссылка при наведении
+--isp-text-interactive-active Ссылка при нажатии
+--isp-text-success Текст успеха
+--isp-text-success-hover Текст успеха при наведении
+--isp-text-success-active Текст успеха при нажатии
+--isp-text-warning Текст предупреждения
+--isp-text-warning-hover Текси предупржедения при наведении
+--isp-text-warning-active Текст предупреждения при нажатии
+--isp-text-danger Текст ошибки
+--isp-text-danger-hover Текст ошибки при наведении
+--isp-text-danger-active Текст ошибки при нажатии
+--isp-text-disabled Текст заблокированных и неактивных элементов
+
+@category Иконки
+--isp-icon-main Стандартная иконка
+--isp-icon-contrast Контрастная иконка
+--isp-icon-additional Дополнительная иконка
+--isp-icon-on-field Иконка в полях ввода
+--isp-icon-info Иконка инфо, кликабельная иконка
+--isp-icon-info-hover Кликабельная иконка при наведении
+--isp-icon-info-active Кликабельная иконка при нажатии
+--isp-icon-success Иконка успех
+--isp-icon-success-hover Иконка успех при наведении
+--isp-icon-success-active Иконка успех при нажатии
+--isp-icon-warning Иконка предупреждение
+--isp-icon-warning-hover Иконка предупреждения при наведении
+--isp-icon-warning-active Иконка предупреждения при нажатии
+--isp-icon-danger Иконка ошибка
+--isp-icon-danger-hover Иконка ошибка при наведении
+--isp-icon-danger-active Иконка ошибка при нажатии
+
+@category Границы
+--isp-border-default Стандартная граница
+--isp-border-interactive Граница интерактивного компонента, граница фокуса
+--isp-border-info Граница инфо для баннера
+--isp-border-info-hover Граница инфо для наведении
+--isp-border-info-active Граница инфо при нажатии
+--isp-border-success Граница успех
+--isp-border-success-hover Граница успеха при наведении
+--isp-border-success-active Граница успеха при нажатии
+--isp-border-warning Граница предупреждения
+--isp-border-warning-hover Граница предупреждения при наведении
+--isp-border-warning-active Граница предупреждения при нажатии
+--isp-border-danger Граница ошибка
+--isp-border-danger-hover Граница ошибки при наведении
+--isp-border-danger-active Граница ошибки при нажатии
+
+@category Нейтральные
+--isp-grey-base
+--isp-grey-low-contrast-100
+--isp-grey-low-contrast-200
+--isp-grey-low-contrast-300
+
+@category Тень
+--isp-shadow Цвет тени
+
+@category Таблица
+--isp-table-background Строка таблицы без зебры
+--isp-table-background-hover Строка таблицы без зебры при наведении
+--isp-table-background-selected Выделенная строка таблицы без зебры
+--isp-table-background-odd Нечетная строка
+--isp-table-background-odd-selected Фон выбранной нечетной строки
+--isp-table-background-even-selected Фон выбранной четной строки
+--isp-table-background-deleted Фон удаленной строки
+
+@category Инфографика
+--isp-graph-blue
+--isp-graph-bluepurple
+--isp-graph-purple
+--isp-graph-pink
+--isp-graph-palered
+--isp-graph-red
+--isp-graph-paleorange
+--isp-graph-orange
+--isp-graph-warmyellow
+--isp-graph-yellow
+--isp-graph-green
+--isp-graph-lightblue
+--isp-graph-paleblue
+--isp-graph-brightblue
+--isp-graph-lightpurple
+--isp-graph-darkblue
+--isp-graph-bluegrey
+*/
+
+@mixin generateStateVariables($name, $baseColor) {
+  --isp-#{$name}: #{$baseColor};
+  --isp-#{$name}-hover: #{colorGen.getHoverColorFrom($baseColor)};
+  --isp-#{$name}-active: #{colorGen.getActiveColorFrom($baseColor)};
+}
+
+@mixin generatePaleStateVariables($name, $baseColor) {
+  --isp-#{$name}-inline-hover: #{colorGen.getHoverPaleColorFrom($baseColor)};
+  --isp-#{$name}-inline-active: #{colorGen.getActivePaleColorFrom($baseColor)};
+}
+
+:root {
+  @include generateStateVariables('background-main', bg.$main);
+  --isp-background-additional: #{bg.$additional};
+  --isp-background-contrast: #{bg.$contrast};
+  --isp-background-list: #{bg.$list};
+  @include generateStateVariables('background-accent', bg.$accent);
+  @include generateStateVariables('background-info', bg.$info);
+  @include generatePaleStateVariables('background-info', bg.$info);
+  --isp-background-info-secondary: #{bg.$infoSecondary};
+  @include generateStateVariables('background-success', bg.$success);
+  @include generatePaleStateVariables('background-success', bg.$success);
+  --isp-background-success-secondary: #{bg.$successSecondary};
+  @include generateStateVariables('background-warning', bg.$warning);
+  @include generatePaleStateVariables('background-warning', bg.$warning);
+  --isp-background-warning-secondary: #{bg.$warningSecondary};
+  @include generateStateVariables('background-danger', bg.$danger);
+  @include generatePaleStateVariables('background-danger', bg.$danger);
+  --isp-background-danger-secondary: #{bg.$dangerSecondary};
+
+  --isp-text-main: #{text.$main};
+  --isp-text-contrast: #{text.$contrast};
+  --isp-text-additional: #{text.$additional};
+  @include generateStateVariables('text-interactive', text.$interactive);
+  @include generateStateVariables('text-accent', text.$accent);
+  @include generateStateVariables('text-success', text.$success);
+  @include generateStateVariables('text-warning', text.$warning);
+  @include generateStateVariables('text-danger', text.$danger);
+  --isp-text-disabled: #{text.$disabled};
+
+  @include generateStateVariables('icon-main', icon.$main);
+  --isp-icon-contrast: #{icon.$contrast};
+  --isp-icon-additional: #{icon.$additional};
+  --isp-icon-on-field: #{icon.$onField};
+  @include generateStateVariables('icon-info', icon.$info);
+  @include generateStateVariables('icon-success', icon.$success);
+  @include generateStateVariables('icon-warning', icon.$warning);
+  @include generateStateVariables('icon-danger', icon.$danger);
+
+  --isp-border-default: #{border.$default};
+  @include generateStateVariables('border-interactive', border.$interactive);
+  @include generateStateVariables('border-info', border.$info);
+  @include generateStateVariables('border-success', border.$success);
+  @include generateStateVariables('border-warning', border.$warning);
+  @include generateStateVariables('border-danger', border.$danger);
+
+  --isp-grey-base: #{neutral.$base};
+  --isp-grey-low-contrast-100: #{map.get(neutral.$lowContrast, 10)};
+  --isp-grey-low-contrast-200: #{map.get(neutral.$lowContrast, 20)};
+  --isp-grey-low-contrast-300: #{map.get(neutral.$lowContrast, 30)};
+
+  --isp-shadow: #{shadow.$base};
+
+  --isp-table-background: #{table.$background};
+  --isp-table-background-selected: #{table.$backgroundSelected};
+  --isp-table-background-odd: #{table.$backgroundOdd};
+  --isp-table-background-odd-selected: #{table.$backgroundOddSelected};
+  --isp-table-background-even-selected: #{table.$backgroundEvenSelected};
+  --isp-table-background-hover: #{table.$backgroundHover};
+  --isp-table-background-deleted: #{table.$backgroundDeleted};
+
+  --isp-graph-blue: #{graph.$blue};
+  --isp-graph-bluepurple: #{graph.$bluePurple};
+  --isp-graph-purple: #{graph.$purple};
+  --isp-graph-pink: #{graph.$pink};
+  --isp-graph-palered: #{graph.$paleRed};
+  --isp-graph-red: #{graph.$red};
+  --isp-graph-paleorange: #{graph.$paleOrange};
+  --isp-graph-orange: #{graph.$orange};
+  --isp-graph-warmyellow: #{graph.$warmYellow};
+  --isp-graph-yellow: #{graph.$yellow};
+  --isp-graph-green: #{graph.$green};
+  --isp-graph-lightblue: #{graph.$lightBlue};
+  --isp-graph-paleblue: #{graph.$paleBlue};
+  --isp-graph-brightblue: #{graph.$brightBlue};
+  --isp-graph-lightpurple: #{graph.$lightPurple};
+  --isp-graph-darkblue: #{graph.$darkBlue};
+  --isp-graph-bluegrey: #{graph.$blueGrey};
+}

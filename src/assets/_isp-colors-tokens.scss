@@ -1,0 +1,55 @@
+@use "./isp-colors-tools" as ispColorsTools;
+
+@function getColorTokenName($prefix, $categoryName, $propertyName) {
+  @return "--#{$prefix}-#{$categoryName}-#{"" + $propertyName}";
+}
+
+@function getColorTokenBasisName($tokenName) {
+  @return #{$tokenName}-basis;
+}
+
+@function getColorTokenLightnessName($tokenName) {
+  @return #{$tokenName}-lightness;
+}
+
+@mixin generateDefaultToken($prefix, $categoryName, $propertyName, $propertyValue) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  #{$tokenName}: #{$propertyValue};
+}
+
+@mixin generateColorToken($prefix, $categoryName, $propertyName, $propertyValue) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  #{$tokenName}: #{ispColorsTools.getHSLColor($propertyValue)};
+}
+
+@mixin generateColorBasis($prefix, $categoryName, $propertyName, $propertyValue) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  #{$tokenName}-basis: #{ispColorsTools.getHSColor($propertyValue)};
+}
+
+@mixin generateColorLightness($prefix, $categoryName, $propertyName, $propertyValue) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  #{$tokenName}-lightness: #{ispColorsTools.getColorLightness($propertyValue)};
+}
+
+@mixin generateColorBaseToken($prefix, $categoryName, $propertyName) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  $tokenBasisName: getColorTokenBasisName($tokenName);
+  $tokenLightness: getColorTokenLightnessName($tokenName);
+  //$colorBasis: --#{$prefix}-#{$categoryName}-#{"" + $propertyName}-basis;
+  #{$tokenName}: hsl(var(#{$tokenBasisName}), var(#{$tokenLightness}));
+}
+
+@mixin generateColorHoverToken($prefix, $categoryName, $propertyName) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  $tokenBasisName: getColorTokenBasisName($tokenName);
+  $tokenLightness: getColorTokenLightnessName($tokenName);
+  #{$tokenName}__hover: hsl(var(#{$tokenBasisName}), calc(var(#{$tokenLightness}) - 16%));
+}
+
+@mixin generateColorActiveToken($prefix, $categoryName, $propertyName) {
+  $tokenName: getColorTokenName($prefix, $categoryName, $propertyName);
+  $tokenBasisName: getColorTokenBasisName($tokenName);
+  $tokenLightness: getColorTokenLightnessName($tokenName);
+  #{$tokenName}__active: hsl(var(#{$tokenBasisName}), calc(var(#{$tokenLightness}) - 24%));
+}
