@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 import { Component, OnInit } from '@angular/core';
 import { DatePipe, JsonPipe, NgForOf, NgIf } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
@@ -97,7 +99,7 @@ export class GalaktikaComponent implements OnInit {
   }
 
   private requestConfig(): Observable<ConfigurationResponse> {
-    return this.http.post<ConfigurationResponse>('http://localhost:3000/galaktika/config', {})
+    return this.http.post<ConfigurationResponse>(environment.baseUrl + '/galaktika/config', {})
   }
 
   private request(requestNumber: number) {
@@ -105,7 +107,7 @@ export class GalaktikaComponent implements OnInit {
     const requestData = {
       action: requestNumber
     };
-    return this.http.post<GalaktikaFormControl>('http://localhost:3000/galaktika/data', requestData).pipe(
+    return this.http.post<GalaktikaFormControl>(environment.baseUrl + '/galaktika/data', requestData).pipe(
       map(data => {
         data.requestTimestamp = requestTime;
         return data;
