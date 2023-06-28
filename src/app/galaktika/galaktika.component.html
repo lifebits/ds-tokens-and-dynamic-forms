@@ -3,9 +3,9 @@
   <button type="button" (click)="generateRequests(formGroup)">Generate Form Controls</button>
   <br>
   <br>
-  <div *ngFor="let formControl of responseList">
+  <!--<div *ngFor="let formControl of responseList">
     <app-dynamic-form-question [form]="formLogic" [formControlModel]="formControl!.value.action"></app-dynamic-form-question>
-  </div>
+  </div>-->
   <br>
   <button *ngIf="responseList.length" type="submit">
     On Submit
@@ -21,14 +21,16 @@
     <tr>
       <td>Request Number</td>
       <td>Request Time</td>
-      <td>Response Time</td>
+      <td>Server Response Time</td>
+      <td>Response Log Time</td>
       <td>Request Duration</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let response of responseList">
-      <td>{{ response.value.action.order }}</td>
+      <td>{{ response.value.order }}</td>
       <td>{{ response.value.requestTimestamp | date:'H:mm:ss' }}</td>
+      <td>{{ response.value.responseTimestamp | date: 'H:mm:ss' }}</td>
       <td>{{ response.timestamp | date:'H:mm:ss' }}</td>
       <td>{{ response.timestamp - response.value.requestTimestamp | date: 's' }} sec</td>
     </tr>

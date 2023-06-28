@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe, JsonPipe, NgForOf, NgIf } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { interval, map, mergeMap, Observable, take, tap, timestamp, toArray } from "rxjs";
+import {count, delay, interval, map, mergeMap, Observable, take, tap, timestamp, toArray} from "rxjs";
 
 import { BaseFormControl } from './base-form-control';
 import { BaseControlService } from './base-control.service';
@@ -21,8 +21,11 @@ interface ConfigForm {
 }
 
 interface GalaktikaFormControl {
-  action: BaseFormControl;
+  action?: BaseFormControl;
   requestTimestamp: Date;
+  responseTimestamp: Date;
+  status?: string;
+  order?: number;
 }
 
 @Component({
@@ -60,7 +63,8 @@ export class GalaktikaComponent implements OnInit {
   constructor(private http: HttpClient, private controlService: BaseControlService) { }
 
   ngOnInit(): void {
-    this.requestConfig().subscribe(value => {
+    this.requestConfig()
+      .subscribe(value => {
       this.formGroup.get('configuration')?.patchValue(value);
     });
   }
@@ -91,25 +95,41 @@ export class GalaktikaComponent implements OnInit {
         }))
       )
       .subscribe((value) => {
+        console.log(value);
         this.responseList = value;
         this.isLoading = false;
-        const controls = value.map(v => v.value).map(v => v.action);
-        this.formGroup.addControl('logic', this.controlService.toFormGroup(controls));
+        // const controls = value.map(v => v.value).map(v => v.action);
+        // this.formGroup.addControl('logic', this.controlService.toFormGroup(controls));
       });
   }
 
   private requestConfig(): Observable<ConfigurationResponse> {
-    return this.http.post<ConfigurationResponse>(environment.baseUrl + '/galaktika/config', {})
+    // const url = environment.baseUrl + '/galaktika/config';
+    const url = 'http://localhost:4521';
+    return this.http.post<ConfigurationResponse>(url, {action: "params"}).pipe(
+      map(config => {
+        return {
+          count: Number(config.count),
+          delay: Number(config.delay)
+        };
+      })
+    )
   }
 
   private request(requestNumber: number) {
+    // const url = environment.baseUrl + '/galaktika/data'
+    const url = 'http://localhost:4521';
     const requestTime = new Date();
     const requestData = {
       action: requestNumber
     };
-    return this.http.post<GalaktikaFormControl>(environment.baseUrl + '/galaktika/data', requestData).pipe(
+    return this.http.post<GalaktikaFormControl>(url, {action: "process"}).pipe(
       map(data => {
         data.requestTimestamp = requestTime;
+        if (data.status) {
+          data.responseTimestamp = new Date(data.status.slice(0, -4));
+          data.order = requestNumber;
+        }
         return data;
       })
     )
